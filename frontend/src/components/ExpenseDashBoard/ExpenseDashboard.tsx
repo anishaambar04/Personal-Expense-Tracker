@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import styles from "./ExpenseDashboard.module.scss";
-
+import ProfileMenu from "../ProfileMenu/ProfileMenu";
+import type { User } from "../../services/AuthServices";
 import {
   getTransactions,
   createTransaction,
   updateTransaction,
   deleteTransaction,
-} from "../services/TransactionServices";
-
+} from "../../services/TransactionServices";
 import type {
   Transaction,
   TransactionInput,
-} from "../services/TransactionServices";
+} from "../../services/TransactionServices";
 
 const categories = [
   "Food",
@@ -55,7 +55,17 @@ function formatDate(date: string) {
   });
 }
 
-function ExpenseDashboard() {
+interface ExpenseDashboardProps {
+  user: User;
+  onLogout: () => void;
+  onViewProfile: () => void;
+}
+
+function ExpenseDashboard({
+  user,
+  onLogout,
+  onViewProfile,
+}: ExpenseDashboardProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -293,14 +303,11 @@ function ExpenseDashboard() {
           </a>
         </nav>
 
-        <div className={styles.account}>
-          <div className={styles.avatar}>A</div>
-
-          <div>
-            <strong>My Account</strong>
-            <span>Personal account</span>
-          </div>
-        </div>
+        <ProfileMenu
+          user={user}
+          onViewProfile={onViewProfile}
+          onSignOut={onLogout}
+        />
       </aside>
 
       {/* Main Content */}

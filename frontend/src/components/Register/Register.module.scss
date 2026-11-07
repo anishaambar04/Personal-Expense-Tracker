@@ -1,0 +1,132 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f6f7fb;
+  padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.registerCard {
+  width: 100%;
+  max-width: 430px;
+  padding: 35px 40px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.07);
+
+  h1 {
+    color: #20243a;
+    font-size: 25px;
+    margin: 25px 0 8px;
+  }
+
+  > p {
+    color: #85899d;
+    font-size: 13px;
+    margin-bottom: 22px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #20243a;
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #eceef4;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    outline: none;
+    background-color: white;
+    color: #20243a;
+    cursor: text;
+    pointer-events: auto;
+    position: relative;
+    z-index: 3;
+
+    &:focus {
+      border-color: #635bff;
+    }
+  }
+
+  button {
+    background: #635bff;
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: 600;
+
+    &:hover {
+      background: #5148e5;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  span {
+    background: #635bff;
+    color: white;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+  }
+
+  h2 {
+    color: #20243a;
+    font-size: 21px;
+  }
+}
+
+.loginText {
+  text-align: center;
+  margin-top: 22px !important;
+
+  span {
+    color: #635bff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.error,
+.success {
+  font-size: 12px;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.error {
+  background: #fff0f0;
+  color: #e05260;
+}
+
+.success {
+  background: #e9f8f1;
+  color: #16a36a;
+}

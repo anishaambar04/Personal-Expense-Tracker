@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
+using PersonalExpenseTracker.Models;
 
 namespace backend.Data
 {
@@ -12,6 +13,8 @@ namespace backend.Data
         }
 
         public DbSet<Transaction> Transactions { get; set; }
+
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +52,10 @@ namespace backend.Data
                     .HasDefaultValueSql("GETDATE()")
                     .ValueGeneratedOnAdd();
             });
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
         }
     }
 }

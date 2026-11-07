@@ -20,6 +20,20 @@ export interface TransactionInput {
   notes?: string;
 }
 
+// Get JWT token and create authorization headers
+function getAuthHeaders(): HeadersInit {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw new Error("Authentication required. Please log in.");
+  }
+
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+}
+
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
     const errorText = await response.text();
@@ -35,14 +49,18 @@ async function handleResponse<T>(response: Response): Promise<T> {
 
 // GET: Retrieve all transactions
 export async function getTransactions(): Promise<Transaction[]> {
-  const response = await fetch(`${API_BASE_URL}/Transactions`);
+  const response = await fetch(`${API_BASE_URL}/Transactions`, {
+    headers: getAuthHeaders(),
+  });
 
   return handleResponse<Transaction[]>(response);
 }
 
 // GET: Retrieve one transaction
 export async function getTransactionById(id: number): Promise<Transaction> {
-  const response = await fetch(`${API_BASE_URL}/Transactions/${id}`);
+  const response = await fetch(`${API_BASE_URL}/Transactions/${id}`, {
+    headers: getAuthHeaders(),
+  });
 
   return handleResponse<Transaction>(response);
 }
@@ -53,9 +71,7 @@ export async function createTransaction(
 ): Promise<Transaction> {
   const response = await fetch(`${API_BASE_URL}/Transactions`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify({
       title: transaction.title,
       amount: transaction.amount,
@@ -76,9 +92,7 @@ export async function updateTransaction(
 ): Promise<void> {
   const response = await fetch(`${API_BASE_URL}/Transactions/${id}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify({
       id,
       title: transaction.title,
@@ -97,6 +111,7 @@ export async function updateTransaction(
 export async function deleteTransaction(id: number): Promise<void> {
   const response = await fetch(`${API_BASE_URL}/Transactions/${id}`, {
     method: "DELETE",
+    headers: getAuthHeaders(),
   });
 
   await handleResponse<void>(response);
